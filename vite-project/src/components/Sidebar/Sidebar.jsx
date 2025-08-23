@@ -1,9 +1,15 @@
 import Sidebarstamp from "./Sidebarstamp";
+import {useSelector} from 'react-redux';
 import { sec1, sec2, sec3, sec4, sec5, sec6 } from "./icons";
 
 function Sidebar() {
+
+  const burgersign = useSelector((state) => state.burger.value);
+
+
+ 
   return (
-    <div className=" w-58 px-2  fixed h-[calc(100vh-6.5vh)] overflow-y-scroll overflow-x-hidden mt-14 scroll-smooth ">
+    <div className={` px-2  relative  h-[calc(100vh-7vh)] overflow-y-scroll overflow-x-hidden  mt-14 ${ burgersign ? "w-60" : 'w-18' }  `} >
       {sec1.map(({ id, name, icon }) => (
         <Sidebarstamp key={id} name={name} icon={icon} />
       ))}
@@ -39,7 +45,7 @@ function Sidebar() {
       <section className="ml-3 mt-4">
         {sec6.map((item) =>
           item.map((str) => (
-            <a href="#" className="mr-2 cursor-pointer text-xs">
+            <a href="#" className="mr-2 cursor-pointer text-xs" key={Math.random()}>
               {str}
             </a>
           ))

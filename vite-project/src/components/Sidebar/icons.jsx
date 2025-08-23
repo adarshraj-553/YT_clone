@@ -136,17 +136,17 @@ export const sec5 = [
     icon: <GoGear />,
   },
   {
-    id: 18,
+    id: 19,
     name: "Help",
     icon: <IoIosHelpCircleOutline />,
   },
   {
-    id: 18,
+    id: 20,
     name: "Report History",
     icon: <PiFlagLight />,
   },
   {
-    id: 18,
+    id: 21,
     name: "Send Feedback",
     icon: <MdOutlineFeedback />,
   },

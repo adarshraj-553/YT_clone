@@ -1,17 +1,23 @@
 
 
+import { Home } from "./components/HomePage/Home";
 import Navbar from "./components/navbar";
-import Sidebar from "./components/Sidebar";
-import YTapi from "./utils/YTapi";
+import { Recommended } from "./components/HomePage/Recommended";
+import Sidebar from "./components/Sidebar/Sidebar";
+
 
 
 function App() {
 
+  
   return (
     <>
         <Navbar />
-        <Sidebar/>
-        <YTapi/>
+        <div className="flex fixed ">
+         <Sidebar/> 
+         <Home/>
+        </div>
+        
     </>
   );
 }
