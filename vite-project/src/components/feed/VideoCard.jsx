@@ -12,7 +12,7 @@ function VideoCard({ item }) {
       try {
         const res = await axios.get(
           `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${item.snippet.channelId}&key=${API_KEY}`
-        );
+        ); 
         setChannelicon(res.data.items[0].snippet.thumbnails.medium.url);
       } catch (error) {
         console.log(error);
