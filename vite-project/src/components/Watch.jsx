@@ -21,27 +21,32 @@ const Watch = () => {
           `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${API_KEY}`
         );
         setWatchVideo(res?.data?.items[0]);
+        // console.log(res.data.items[0])
+      
       } catch (error) {
         console.log(error);
       }
     })();
   }, []);
 
- 
   
-  //  useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const res2 = await axios.get(
-  //         `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${watchVideo.snippet.channelId}&key=${API_KEY}`
-  //       );
-  //       setChannelIcon(res2);
+ 
+  // this useEffect is for avatar icon fetching
+   useEffect(() => {
+     if (!watchVideo || !watchVideo.snippet) return;
+    (async () => {
+      try {
+        const res2 = await axios.get(
+          `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${watchVideo.snippet.channelId}&key=${API_KEY}`
+        );
+         setChannelIcon(res2?.data?.items[0]?.snippet?.thumbnails?.high?.url);
+        // console.log(res2?.data)
 
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, []);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [watchVideo]);
     
 
   return (
@@ -67,7 +72,7 @@ const Watch = () => {
 
             <div className="flex justify-between">
               <div className="flex mt-1 w-[44%] ">
-                <Avatar   round={true} size="50" />
+                <Avatar  src={channelIcon} round={true} size="50" />
                 <div className="mx-4 ">
                   <h2 className="font-semibold text-lg">
                     {watchVideo.snippet.channelTitle}
