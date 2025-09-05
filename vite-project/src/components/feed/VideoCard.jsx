@@ -4,9 +4,10 @@ import { API_KEY } from "../../projectData/api";
 import axios from "axios";
 
 function VideoCard({ item }) {
-
+  
   const [channelicon, setChannelicon] = useState(""); // state and useEffect to fetch channel's avatar
-  let viewscount = Number(item.statistics.viewCount);
+  let [viewscount, setViewscount] = useState(null); 
+  
 
   function getviews() {
     if (viewscount > 0 && viewscount <= 999) {
@@ -31,6 +32,9 @@ function VideoCard({ item }) {
           `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${item.snippet.channelId}&key=${API_KEY}`
         ); 
         setChannelicon(res.data.items[0].snippet.thumbnails.medium.url);
+        // console.log(res.data.items[0])
+         setViewscount(Number(res.data.items[0].statistics.viewCount))
+        //  console.log(viewscount)
       } catch (error) {
         console.log(error);
       }

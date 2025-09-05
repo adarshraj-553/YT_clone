@@ -15,15 +15,15 @@ const VideoContainer = () => {
       try {
         if (category === "All") {
           const res = await axios.get(`${Video_url}`);
-          // console.log(res);
+          // console.log(res?.data?.items);
           dispatch(addVideos(res?.data?.items));
-          console.log(res?.data?.items);
+          
         } else {
           // fetchin videos by category
           const res2 = await axios.get(
             `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=${category}&key=${API_KEY}`
           );
-          console.log(res2.data.items);
+          // console.log(res2.data.items);
           dispatch(addVideos(res2?.data?.items));
         }
       } catch (error) {
