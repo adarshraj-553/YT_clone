@@ -6,12 +6,30 @@ import { useState,useEffect } from "react";
 
 const ResultVideoCards = ({ item }) => {
   const [channelicon, setChannelIcon] = useState("");
+  let [viewscount, setViewscount] = useState(null)
+
+  function getviews() {
+    if (viewscount > 0 && viewscount <= 999) {
+      return <>{viewscount}</>;
+    }
+     else if (viewscount > 999 && viewscount <= 999999) {
+      viewscount = (viewscount - (viewscount % 1000)) / 1000
+    //   console.log(`${viewscount}k`);
+      return<>{viewscount}k</>
+    } 
+    else if (viewscount > 999999 && viewscount <= 999999999) {
+      viewscount = (viewscount - (viewscount % 100000)) / 1000000;
+    //   console.log(`${viewscount}M`);
+      return<>{viewscount}M</>
+    }
+  }
 
   useEffect(() => {
     (async () => {
       const res = await axios.get( `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${item.snippet.channelId}&key=${API_KEY}`) 
     //    console.log(res.data)
-        setChannelIcon(res.data.items[0].snippet.thumbnails.medium.url)
+         setChannelIcon(res.data.items[0].snippet.thumbnails.medium.url)
+         setViewscount(Number(res.data.items[0].statistics.viewCount));
     })();
 
   }, []);
@@ -29,8 +47,8 @@ const ResultVideoCards = ({ item }) => {
         </div>
 
         <div className=" text-gray-600 ml-2 text-sm">
-          <span>views </span>
-          <span>time passed</span>
+          <span>{getviews()} views</span>
+          {/* <span>time passed</span> */}
         </div>
 
         <div className="flex items-center ml-2 my-2 text-gray-600 font-sans text-base ">

@@ -1,33 +1,42 @@
 import Avatar from "react-avatar";
 import axios from "axios";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { BiLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
 import { PiShareFatLight } from "react-icons/pi";
 import { LiaDownloadSolid } from "react-icons/lia";
 import { API_KEY } from "../projectData/api";
+import VideoSuggestion from "./VideoSuggestion";
 
 const Watch = () => {
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get("v");
   const [watchVideo, setWatchVideo] = useState(null);
   const [channelIcon, setChannelIcon] = useState("");
+  const [suggestionVideos, setSuggestionVideos] = useState([]);
+  
 
   useEffect(() => {
     (async () => {
       try {
         const res = await axios.get(
           `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${API_KEY}`
-        );
+        ); 
         setWatchVideo(res?.data?.items[0]);
         // console.log(res.data.items[0])
+
+        const res2 = await axios.get(
+          `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=40&regionCode=IN&key=${API_KEY}`
+        )  // for video suggestion
+        console.log(res2.data.items)
+        setSuggestionVideos(res2?.data?.items)
       
       } catch (error) {
         console.log(error);
       }
     })();
-  }, []);
+  }, [videoId]);
 
   
  
@@ -50,7 +59,7 @@ const Watch = () => {
     
 
   return (
-    <div className="mt-16">
+    <div className="mt-16 flex">
       <section>
         <iframe
           width="880"
@@ -102,6 +111,20 @@ const Watch = () => {
             </div>
           </>
         )}
+      </section>
+      <section className="ml-3 w-95 h-167 overflow-y-scroll">
+         {suggestionVideos.map((item) => (
+          <Link to={`/watch?v=${item.id}`} key={item.id}>
+            <VideoSuggestion item={item}/>
+          </Link>
+          
+         ))} 
+
+        
+        
+       
+       
+
       </section>
     </div>
   );

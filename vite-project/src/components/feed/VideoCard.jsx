@@ -6,6 +6,23 @@ import axios from "axios";
 function VideoCard({ item }) {
 
   const [channelicon, setChannelicon] = useState(""); // state and useEffect to fetch channel's avatar
+  let viewscount = Number(item.statistics.viewCount);
+
+  function getviews() {
+    if (viewscount > 0 && viewscount <= 999) {
+      return <>{viewscount}</>;
+    }
+     else if (viewscount > 999 && viewscount <= 999999) {
+      viewscount = (viewscount - (viewscount % 1000)) / 1000
+      console.log(`${viewscount}k`);
+      return<>{viewscount}k</>
+    } 
+    else if (viewscount > 999999 && viewscount <= 999999999) {
+      viewscount = (viewscount - (viewscount % 100000)) / 1000000;
+      console.log(`${viewscount}M`);
+      return<>{viewscount}M</>
+    }
+  }
 
   useEffect(() => {
     (async () => {
@@ -42,8 +59,8 @@ function VideoCard({ item }) {
         <div className="ml-3 mt-1">
           <p className="font-medium">{item.snippet.title}</p>
           <p className="text-xs text-gray-800">{item.snippet.channelTitle}</p>
-          {/* <span className="text-xs">__k views • </span>
-          <span className="text-xs">date</span> */}
+           <span className="text-xs">{getviews()} views • </span>
+          {/*<span className="text-xs">date</span> */}
         </div>
       </div>
     </div>
