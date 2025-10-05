@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   const [searchInput, setSearchInput] = useState("");
-
+  const flag = true
   const burgertoggler = useDispatch();
 
   function handleBurger() {
@@ -20,11 +20,14 @@ function Navbar() {
   }
 
   return (
+    <>
+
+    
     <nav className=" flex justify-between fixed top-0 w-[100%] bg-white z-50 border shadow-lg">
       <div className="flex items-center space-x-4  w-40 cursor-pointer  py-2 ">
         <CiMenuBurger className="ml-6 cursor-pointer" onClick={handleBurger} />
         <Link to={"/"}>
-          <img src={yticon} className="w-24  cursor-pointer " />
+          <img src={yticon} className="w-24 cursor-pointer"/>
         </Link>
       </div>
 
@@ -50,6 +53,7 @@ function Navbar() {
           className="bg-gray-200 rounded-full ml-4 py-2 cursor-pointer hover:bg-gray-300 duration-300"
         />
       </div>
+      
 
       <div className=" flex items-center w-45 ">
         <BsThreeDotsVertical size={"20px"} className="ml-4 cursor-pointer" />
@@ -57,7 +61,26 @@ function Navbar() {
           <FaRegUserCircle size={"20px"} className="mr-2 " /> sign up
         </button>
       </div>
+      
     </nav>
+  {/* { flag ? (
+    <div className="absolute z-50 ml-120 mt-12.5 rounded-xl bg-gray-200 w-[26%] shadow-md shadow-gray-500 border-1 border-gray-400 ">
+         <ul className="p-2">
+          <li>gdg</li>
+          <li>gfdg</li>
+          <li>dfgdfgfdg fgfdg</li>
+          <li>gfd  dfgfdg</li>
+          <li>gfdgf dg d</li>
+          <li>gf fdg</li>
+          <li>dgdgdgdg gdgfdgdfgdf</li>
+
+         </ul>
+    </div>
+  ) : (<div></div>)
+  } */}
+    </>
+    
+    
   );
 }
 
